@@ -1,5 +1,6 @@
 package googledrive.domain;
 
+import googledrive.domain.VideoProcessing;
 import googledrive.VideoProcessingApplication;
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +22,27 @@ public class Video  {
     
     
     private Long id;
+    
+    
+    
+    
+    
+    private String videoUrl;
+    
+    
+    
+    
+    
+    private Long fileId;
 
+    @PostPersist
+    public void onPostPersist(){
+
+
+        VideoProcessing videoProcessing = new VideoProcessing(this);
+        videoProcessing.publishAfterCommit();
+
+    }
 
     public static VideoRepository repository(){
         VideoRepository videoRepository = VideoProcessingApplication.applicationContext.getBean(VideoRepository.class);
